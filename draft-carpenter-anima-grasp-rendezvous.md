@@ -1,12 +1,12 @@
 ---
 title: Using GRASP as an Agent Rendezvous Mechanism
 abbrev: GRASP Rendezvous
-docname: draft-carpenter-anima-grasp-rendezvous-00
+docname: draft-carpenter-anima-grasp-rendezvous-latest
 submissiontype: IETF
 ipr: trust200902
 area: "Operations and Management"
 workgroup: "Autonomic Networking Integrated Model and Approach"
-kw: 
+kw:
  - agent
  - discovery
 cat: info
@@ -24,7 +24,7 @@ pi:
   symrefs: yes
 
 author:
- 
+
       -
         ins: B. E. Carpenter
         name: Brian E. Carpenter
@@ -92,7 +92,7 @@ of the GRASP objective concerned (see Section 2.10 of {{RFC8990}}).
 
 ## Simple rendezvous
 
-The first method is simply to perform discovery and use the resulting locators appropriately. This is most easily described in terms of the GRASP API {{RFC8991}}. First the client ASA issues a discovery call, e.g., 
+The first method is simply to perform discovery and use the resulting locators appropriately. This is most easily described in terms of the GRASP API {{RFC8991}}. First the client ASA issues a discovery call, e.g.,
 
 ~~~~
 obj1 = objective("example.org:translate_english_french")
@@ -131,7 +131,7 @@ Note that although GRASP has a defined maximum message size, it will not limit
 these messages, as they are not GRASP messages.
 
 This method has the advantage that it can be entirely handled by GRASP mechanisms plus a
-simple send/receive API. However, this means that FQDN and URI locators are not supported, 
+simple send/receive API. However, this means that FQDN and URI locators are not supported,
 CBOR is required,
 and only the transport protocol supported by GRASP is available (normally TCP protected
 by Autonomic Control Plane {{RFC8994}} security).

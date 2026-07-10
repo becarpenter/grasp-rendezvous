@@ -2,34 +2,42 @@
 
 
 
-WG Working Group                                              Y. N. Here
-Internet-Draft                                    Your Organization Here
+Autonomic Networking Integrated Model and Approach       B. E. Carpenter
+Internet-Draft                                         Univ. of Auckland
 Intended status: Informational                              10 July 2026
 Expires: 11 January 2027
 
 
-                           TODO - Your title
-                  draft-todo-yourname-protocol-latest
+              Using GRASP as an Agent Rendezvous Mechanism
+             draft-carpenter-anima-grasp-rendezvous-latest
 
 Abstract
 
-   TODO Abstract
+   This document describes how the GeneRic Autonomic Signaling Protocol
+   (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for
+   one Autonomic Service Agent to find another and then establish a
+   generic communication channel between them.  Such a channel could be
+   used for any form of bilateral communication between agents, not
+   limited to GRASP exchanges.
 
 About This Document
 
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://example.com/LATEST.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-todo-yourname-
-   protocol/.
+   https://becarpenter.github.io/grasp-rendezvous/draft-carpenter-anima-
+   grasp-rendezvous.html.  Status information for this document may be
+   found at https://datatracker.ietf.org/doc/draft-carpenter-anima-
+   grasp-rendezvous/.
 
-   Discussion of this document takes place on the WG Working Group
-   mailing list (mailto:WG@example.com), which is archived at
-   https://example.com/WG.
+   Discussion of this document takes place on the Autonomic Networking
+   Integrated Model and Approach Working Group mailing list
+   (mailto:anima@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/browse/anima/.  Subscribe at
+   https://www.ietf.org/mailman/listinfo/anima/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/USER/REPO.
+   https://github.com/becarpenter/grasp-rendezvous.
 
 Status of This Memo
 
@@ -65,50 +73,184 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-   2.  Conventions and Definitions
-   3.  Security Considerations
-   4.  IANA Considerations
-   5.  Normative References
-   Acknowledgments
+   2.  Rendezvous procedures
+     2.1.  Simple rendezvous
+     2.2.  Rendezvous via brief GRASP negotiation
+   3.  Implementation Status [RFC Editor: please remove]
+   4.  Security Considerations
+   5.  IANA Considerations
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
+   Appendix A.  Change Log
+     A.1.  Draft-00
+   Acknowledgements
    Author's Address
 
 1.  Introduction
 
-   TODO Introduction
+   The GeneRic Autonomic Signaling Protocol (GRASP) is specified in
+   [RFC8990], and an API is described in [RFC8991].  Its purpose is to
+   support discovery, data synchronization, and negotiation among
+   Autonomic Service Agents (ASAs) in a self-managing autonomic network.
+   For the general model of an autonomic network, and for terminology
+   not otherwise defined here or in RFC 8990, see [RFC8993].  General
+   considerations for ASAs are discussed in [RFC9222].
 
-2.  Conventions and Definitions
+   A basic feature of GRASP is its discovery mechanism, using the
+   M_DISCOVER and M_RESPONSE messages, which allow an Autonomic Service
+   Agent to discover another ASA that supports a particular GRASP
+   objective (as defined in RFC 8990).  Following this discovery
+   process, ASAs may conduct a GRASP synchronization session to share
+   data, or a GRASP negotiation session to agree on certain parameter
+   settings.
 
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
-   capitals, as shown here.
+   However, in some cases the two agents may require to communicate in
+   some other way, outside the scope of GRASP synchronization or
+   negotiation.  In this case, GRASP can be used purely as a generic
+   rendezvous mechanism between agents.
 
-3.  Security Considerations
+   Note that GRASP discovery does not discover a specified agent.
+   Instead, it discovers an agent that supports a specified objective.
+   For example, if an agent wants to find support for an objective named
+   "example.org:translate_english_french", it will discover one or more
+   agents that support an objective of that name.
 
-   TODO Security
+2.  Rendezvous procedures
 
-4.  IANA Considerations
+   There are two methods for an ASA to use GRASP discovery to establish
+   a communications channel.
 
-   This document has no IANA actions.
+   The choice between the two methods will be fixed as part of the
+   definition of the GRASP objective concerned (see Section 2.10 of
+   [RFC8990]).
 
-5.  Normative References
+2.1.  Simple rendezvous
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/rfc/rfc2119>.
+   The first method is simply to perform discovery and use the resulting
+   locators appropriately.  This is most easily described in terms of
+   the GRASP API [RFC8991].  First the client ASA issues a discovery
+   call, e.g.,
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+   obj1 = objective("example.org:translate_english_french")
+   discover(asa_handle1, obj1, timeout, minimum_TTL)
 
-Acknowledgments
+   The client will receive in return a list of locators for ASAs that
+   support the given objective.  According to Section 2.9 of [RFC8990]
+   these locators may be IP addresses, FQDNs, or URIs.  The client ASA
+   may now use any of those locators to open a transport connection to
+   another ASA supporting the given objective, with no other GRASP
+   messages required.
 
-   TODO acknowledge.
+   For this to operate successfully, the remote ASA must have previously
+   registered itself, via the GRASP API, as ready to support the same
+   objective, e.g.,
+
+   obj2 = objective("example.org:translate_english_french")
+   register(asa_handle2, obj2)
+
+   This method has the advantage that any type of locator could be used
+   and any transport protocol could be used.  However, both ASAs will
+   have to support the chosen locator type and transport protocol (one
+   as a client and the other as a server), and provide adequate
+   security.
+
+2.2.  Rendezvous via brief GRASP negotiation
+
+   Another approach is possible, which creates a GRASP session
+   identifier and a vestigial GRASP negotiation session.  Discovery
+   proceeds as just described.  However, following discovery, the client
+   ASA starts a GRASP negotiation process as described in Section 2.5.5
+   of [RFC8990], using the M_REQ_NEG message.  Upon receipt of an
+   M_NEGOTIATE message in reply, instead of continuing to exchange
+   M_NEGOTIATE messages, both ASAs switch to a straightforward transport
+   layer communication, using the channel created by the M_REQ_NEG/
+   M_NEGOTIATE exchange.  Since GRASP is a CBOR-based protocol, messages
+   in this case are expected to be encoded in CBOR [RFC8949].
+
+   Note that although GRASP has a defined maximum message size, it will
+   not limit these messages, as they are not GRASP messages.
+
+   This method has the advantage that it can be entirely handled by
+   GRASP mechanisms plus a simple send/receive API.  However, this means
+   that FQDN and URI locators are not supported, CBOR is required, and
+   only the transport protocol supported by GRASP is available (normally
+   TCP protected by Autonomic Control Plane [RFC8994] security).
+
+3.  Implementation Status [RFC Editor: please remove]
+
+   Rendezvous via GRASP negotiation has been implemented in the form of
+   gsend() and grecv() primitives added to a prototype version of GRASP
+   (https://github.com/becarpenter/graspy).  This amounted to about 60
+   lines of Python code.
+
+4.  Security Considerations
+
+   The security considerations of [RFC8990] apply.  The normal
+   deployment scenario for GRASP is to run over a secure Autonomic
+   Control Plane [RFC8994], which defines a strongly enforced trust
+   boundary and protects all traffic cryptographically.  All agents must
+   lie within this trust boundary.
+
+5.  IANA Considerations
+
+   No IANA actions are required by this document.  For considerations
+   about naming and registering GRASP objectives, see Section 2.10.1 of
+   [RFC8990].
+
+6.  References
+
+6.1.  Normative References
+
+   [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/info/rfc8949>.
+
+   [RFC8990]  Bormann, C., Carpenter, B., Ed., and B. Liu, Ed., "GeneRic
+              Autonomic Signaling Protocol (GRASP)", RFC 8990,
+              DOI 10.17487/RFC8990, May 2021,
+              <https://www.rfc-editor.org/info/rfc8990>.
+
+   [RFC8994]  Eckert, T., Ed., Behringer, M., Ed., and S. Bjarnason, "An
+              Autonomic Control Plane (ACP)", RFC 8994,
+              DOI 10.17487/RFC8994, May 2021,
+              <https://www.rfc-editor.org/info/rfc8994>.
+
+6.2.  Informative References
+
+   [RFC8991]  Carpenter, B., Liu, B., Ed., Wang, W., and X. Gong,
+              "GeneRic Autonomic Signaling Protocol Application Program
+              Interface (GRASP API)", RFC 8991, DOI 10.17487/RFC8991,
+              May 2021, <https://www.rfc-editor.org/info/rfc8991>.
+
+   [RFC8993]  Behringer, M., Ed., Carpenter, B., Eckert, T., Ciavaglia,
+              L., and J. Nobre, "A Reference Model for Autonomic
+              Networking", RFC 8993, DOI 10.17487/RFC8993, May 2021,
+              <https://www.rfc-editor.org/info/rfc8993>.
+
+   [RFC9222]  Carpenter, B., Ciavaglia, L., Jiang, S., and P. Peloso,
+              "Guidelines for Autonomic Service Agents", RFC 9222,
+              DOI 10.17487/RFC9222, March 2022,
+              <https://www.rfc-editor.org/info/rfc9222>.
+
+Appendix A.  Change Log
+
+A.1.  Draft-00
+
+   *  Original version
+
+Acknowledgements
+
+   TBD
 
 Author's Address
 
-   Your Name Here
-   Your Organization Here
-   Email: your.email@example.com
+   Brian E. Carpenter
+   The University of Auckland
+   School of Computer Science
+   The University of Auckland
+   PB 92019
+   Auckland 1142
+   New Zealand
+   Email: brian.e.carpenter@gmail.com

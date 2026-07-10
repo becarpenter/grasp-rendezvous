@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: "Operations and Management"
+workgroup: "Autonomic Networking Integrated Model and Approach"
 keyword:
  - next generation
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "Autonomic Networking Integrated Model and Approach"
+  type: "Working Group"
+  mail: "anima@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/anima/"
+  github: "becarpenter/grasp-rendezvous"
+  latest: "https://becarpenter.github.io/grasp-rendezvous/draft-carpenter-anima-grasp-rendezvous.html"
 
 author:
  -

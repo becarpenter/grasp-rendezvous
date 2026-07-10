@@ -1,7 +1,7 @@
 ---
 title: Using GRASP as an Agent Rendezvous Mechanism
 abbrev: GRASP Rendezvous
-docname: draft-carpenter-anima-grasp-rendezvous
+docname: draft-carpenter-anima-grasp-rendezvous-00
 submissiontype: IETF
 ipr: trust200902
 area: "Operations and Management"

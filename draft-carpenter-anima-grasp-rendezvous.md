@@ -85,7 +85,7 @@ that support an objective of that name.
 
 # Rendezvous procedures
 
-There are two methods of for an ASA to use GRASP discovery to establish a communications channel.
+There are two methods for an ASA to use GRASP discovery to establish a communications channel.
 
 The choice between the two methods will be fixed as part of the definition
 of the GRASP objective concerned (see Section 2.10 of {{RFC8990}}).
@@ -147,7 +147,7 @@ amounted to about 60 lines of Python code.
 
 The security considerations of {{RFC8990}} apply. The normal deployment  scenario
 for GRASP is to run over a secure Autonomic Control Plane {{RFC8994}}, which defines
-a strongly enforced trust boundary and protects all traffic crytographically.
+a strongly enforced trust boundary and protects all traffic cryptographically.
 All agents must lie within this trust boundary.
 
 # IANA Considerations

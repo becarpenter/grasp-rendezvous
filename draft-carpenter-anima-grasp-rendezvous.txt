@@ -4,8 +4,8 @@
 
 Autonomic Networking Integrated Model and Approach       B. E. Carpenter
 Internet-Draft                                         Univ. of Auckland
-Intended status: Informational                              10 July 2026
-Expires: 11 January 2027
+Intended status: Informational                              11 July 2026
+Expires: 12 January 2027
 
 
               Using GRASP as an Agent Rendezvous Mechanism
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 January 2027.
+   This Internet-Draft will expire on 12 January 2027.
 
 Copyright Notice
 
@@ -107,14 +107,23 @@ Table of Contents
 
    However, in some cases the two agents may require to communicate in
    some other way, outside the scope of GRASP synchronization or
-   negotiation.  In this case, GRASP can be used purely as a generic
-   rendezvous mechanism between agents.
+   negotiation, for example using the A2A protocol discussed in
+   [I-D.rosenberg-agentproto-usecases].  In this case, GRASP can be used
+   purely as a generic rendezvous mechanism between agents.
 
    Note that GRASP discovery does not discover a specified agent.
    Instead, it discovers an agent that supports a specified objective.
    For example, if an agent wants to find support for an objective named
    "example.org:translate_english_french", it will discover one or more
-   agents that support an objective of that name.
+   agents that support an objective of that name.  As a result, an agent
+   can be specialised and only support one objective, or it could
+   support several different objectives.  This is an implementation and
+   deployment choice.
+
+   A feature of GRASP discovery that may be essential during a period of
+   network instability is that it has no dependency on any protocols
+   above the network layer, and in particular no dependency on DNS or
+   mDNS.
 
 2.  Rendezvous procedures
 
@@ -136,11 +145,12 @@ Table of Contents
    discover(asa_handle1, obj1, timeout, minimum_TTL)
 
    The client will receive in return a list of locators for ASAs that
-   support the given objective.  According to Section 2.9 of [RFC8990]
-   these locators may be IP addresses, FQDNs, or URIs.  The client ASA
-   may now use any of those locators to open a transport connection to
-   another ASA supporting the given objective, with no other GRASP
-   messages required.
+   support the given objective.  According to Section 2.9.5 of [RFC8990]
+   these locators may be IP addresses, FQDNs, or URIs.  Each locator is
+   returned with a transport protocol identifier and a port number, if
+   needed.  The client ASA may now use any of those locators to open a
+   transport connection to another ASA supporting the given objective,
+   with no other GRASP messages required.
 
    For this to operate successfully, the remote ASA must have previously
    registered itself, via the GRASP API, as ready to support the same
@@ -190,7 +200,21 @@ Table of Contents
    deployment scenario for GRASP is to run over a secure Autonomic
    Control Plane [RFC8994], which defines a strongly enforced trust
    boundary and protects all traffic cryptographically.  All agents must
-   lie within this trust boundary.
+   lie within this trust boundary, which forms a single GRASP domain.
+
+   However, when an ASA registers itself as described in Section 2.1,
+   this registration merely indicates that the responding ASA has
+   successfully joined the ACP.  It does not provide any authentication
+   or authorization for the agent as such.  Mutual authentication and
+   authorization between agents are out of scope for the rendezvous
+   mechanisms described here.  They should be addressed as part of the
+   protocol used between the agents following a successful rendezvous.
+
+   GRASP supports a flooding mechanism, by which an ASA can advertise
+   the current value of a GRASP objective to all other ASAs in the same
+   domain.  This mechanism should only be used for information that is
+   potentially needed by all agents.  It is not recommended as an
+   alternative rendezvous mechanism.
 
 5.  IANA Considerations
 
@@ -219,6 +243,14 @@ Table of Contents
 
 6.2.  Informative References
 
+   [I-D.rosenberg-agentproto-usecases]
+              Rosenberg, J. and C. F. Jennings, "Framework, Use Cases
+              and Requirements for AI Agent Protocols", Work in
+              Progress, Internet-Draft, draft-rosenberg-agentproto-
+              usecases-00, 4 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-rosenberg-
+              agentproto-usecases-00>.
+
    [RFC8991]  Carpenter, B., Liu, B., Ed., Wang, W., and X. Gong,
               "GeneRic Autonomic Signaling Protocol Application Program
               Interface (GRASP API)", RFC 8991, DOI 10.17487/RFC8991,
@@ -242,7 +274,7 @@ A.1.  Draft-00
 
 Acknowledgements
 
-   TBD
+   Helpful comments were made by Artur Hecker.
 
 Author's Address
 

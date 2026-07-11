@@ -1049,7 +1049,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Carpenter</td>
-<td class="center">Expires 11 January 2027</td>
+<td class="center">Expires 12 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1062,12 +1062,12 @@ svg {
 <dd class="internet-draft">draft-carpenter-anima-grasp-rendezvous-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-10" class="published">10 July 2026</time>
+<time datetime="2026-07-11" class="published">11 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-11">11 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-12">12 January 2027</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1217,14 +1217,20 @@ to discover another ASA that supports a particular GRASP objective
 conduct a GRASP synchronization session to share data, or a GRASP
 negotiation session to agree on certain parameter settings.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">However, in some cases the two agents may require to communicate in some
-other way, outside the scope of GRASP synchronization or negotiation.
+other way, outside the scope of GRASP synchronization or negotiation,
+for example using the A2A protocol discussed in <span>[<a href="#I-D.rosenberg-agentproto-usecases" class="cite xref">I-D.rosenberg-agentproto-usecases</a>]</span>.
 In this case, GRASP can be used purely as a generic rendezvous mechanism
 between agents.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">Note that GRASP discovery does not discover a specified agent. Instead, it
 discovers an agent that supports a specified objective. For example, if
 an agent wants to find support for an objective named
 "example.org:translate_english_french", it will discover one or more agents
-that support an objective of that name.<a href="#section-1-4" class="pilcrow">¶</a></p>
+that support an objective of that name. As a result, an agent can be specialised
+and only support one objective, or it could support several different
+objectives. This is an implementation and deployment choice.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">A feature of GRASP discovery that may be essential during a period of network
+instability is that it has no dependency on any protocols above the network
+layer, and in particular no dependency on DNS or mDNS.<a href="#section-1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rendezvous-procedures">
@@ -1235,7 +1241,7 @@ that support an objective of that name.<a href="#section-1-4" class="pilcrow">¶
 <p id="section-2-1">There are two methods for an ASA to use GRASP discovery to establish a communications channel.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">The choice between the two methods will be fixed as part of the definition
 of the GRASP objective concerned (see Section 2.10 of <span>[<a href="#RFC8990" class="cite xref">RFC8990</a>]</span>).<a href="#section-2-2" class="pilcrow">¶</a></p>
-<div id="simple-rendezvous">
+<div id="simple">
 <section id="section-2.1">
         <h3 id="name-simple-rendezvous">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-simple-rendezvous" class="section-name selfRef">Simple rendezvous</a>
@@ -1248,7 +1254,8 @@ discover(asa_handle1, obj1, timeout, minimum_TTL)
 </pre><a href="#section-2.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1-3">The client will receive in return a list of locators for ASAs that support the given objective.
-According to Section 2.9 of <span>[<a href="#RFC8990" class="cite xref">RFC8990</a>]</span> these locators may be IP addresses, FQDNs, or URIs.
+According to Section 2.9.5 of <span>[<a href="#RFC8990" class="cite xref">RFC8990</a>]</span> these locators may be IP addresses, FQDNs, or URIs.
+Each locator is returned with a transport protocol identifier and a port number, if needed.
 The client ASA may now use any of those locators to open a transport connection to
 another ASA supporting the given objective, with no other GRASP messages required.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.1-4">For this to operate successfully, the remote ASA must have previously registered itself,
@@ -1307,7 +1314,18 @@ amounted to about 60 lines of Python code.<a href="#section-3-1" class="pilcrow"
 <p id="section-4-1">The security considerations of <span>[<a href="#RFC8990" class="cite xref">RFC8990</a>]</span> apply. The normal deployment  scenario
 for GRASP is to run over a secure Autonomic Control Plane <span>[<a href="#RFC8994" class="cite xref">RFC8994</a>]</span>, which defines
 a strongly enforced trust boundary and protects all traffic cryptographically.
-All agents must lie within this trust boundary.<a href="#section-4-1" class="pilcrow">¶</a></p>
+All agents must lie within this trust boundary, which forms a single GRASP domain.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">However, when an ASA registers itself as described in <a href="#simple" class="auto internal xref">Section 2.1</a>, this
+registration merely indicates that the responding ASA has successfully joined
+the ACP. It does not provide any authentication or authorization for the
+agent as such. Mutual authentication and authorization between agents are
+out of scope for the rendezvous mechanisms described here. They should be addressed
+as part of the protocol used between the agents following a successful
+rendezvous.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">GRASP supports a flooding mechanism, by which an ASA can advertise the current
+value of a GRASP objective to all other ASAs in the same domain. This mechanism
+should only be used for information that is potentially needed by all agents.
+It is not recommended as an alternative rendezvous mechanism.<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1351,6 +1369,10 @@ and registering GRASP objectives, see Section 2.10.1 of <span>[<a href="#RFC8990
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.rosenberg-agentproto-usecases">[I-D.rosenberg-agentproto-usecases]</dt>
+        <dd>
+<span class="refAuthor">Rosenberg, J.</span> and <span class="refAuthor">C. F. Jennings</span>, <span class="refTitle">"Framework, Use Cases and Requirements for AI Agent Protocols"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-rosenberg-agentproto-usecases-00</span>, <time datetime="2026-07-04" class="refDate">4 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-rosenberg-agentproto-usecases-00">https://datatracker.ietf.org/doc/html/draft-rosenberg-agentproto-usecases-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8991">[RFC8991]</dt>
         <dd>
 <span class="refAuthor">Carpenter, B.</span>, <span class="refAuthor">Liu, B., Ed.</span>, <span class="refAuthor">Wang, W.</span>, and <span class="refAuthor">X. Gong</span>, <span class="refTitle">"GeneRic Autonomic Signaling Protocol Application Program Interface (GRASP API)"</span>, <span class="seriesInfo">RFC 8991</span>, <span class="seriesInfo">DOI 10.17487/RFC8991</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8991">https://www.rfc-editor.org/info/rfc8991</a>&gt;</span>. </dd>
@@ -1392,7 +1414,8 @@ and registering GRASP objectives, see Section 2.10.1 of <span>[<a href="#RFC8990
       <h2 id="name-acknowledgements">
 <a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
-<p id="appendix-B-1">TBD<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1">Helpful comments were made by
+Artur Hecker.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">

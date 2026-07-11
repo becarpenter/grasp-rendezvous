@@ -48,6 +48,7 @@ informative:
   RFC8991:
   RFC8993:
   RFC9222:
+  I-D.rosenberg-agentproto-usecases:
 
 --- abstract
 
@@ -73,7 +74,8 @@ conduct a GRASP synchronization session to share data, or a GRASP
 negotiation session to agree on certain parameter settings.
 
 However, in some cases the two agents may require to communicate in some
-other way, outside the scope of GRASP synchronization or negotiation.
+other way, outside the scope of GRASP synchronization or negotiation,
+for example using the A2A protocol discussed in {{I-D.rosenberg-agentproto-usecases}}.
 In this case, GRASP can be used purely as a generic rendezvous mechanism
 between agents.
 
@@ -81,7 +83,13 @@ Note that GRASP discovery does not discover a specified agent. Instead, it
 discovers an agent that supports a specified objective. For example, if
 an agent wants to find support for an objective named
 "example.org:translate_english_french", it will discover one or more agents
-that support an objective of that name.
+that support an objective of that name. As a result, an agent can be specialised
+and only support one objective, or it could support several different
+objectives. This is an implementation and deployment choice.
+
+A feature of GRASP discovery that may be essential during a period of network
+instability is that it has no dependency on any protocols above the network
+layer, and in particular no dependency on DNS or mDNS.
 
 # Rendezvous procedures
 
@@ -90,7 +98,7 @@ There are two methods for an ASA to use GRASP discovery to establish a communica
 The choice between the two methods will be fixed as part of the definition
 of the GRASP objective concerned (see Section 2.10 of {{RFC8990}}).
 
-## Simple rendezvous
+## Simple rendezvous {#simple}
 
 The first method is simply to perform discovery and use the resulting locators appropriately. This is most easily described in terms of the GRASP API {{RFC8991}}. First the client ASA issues a discovery call, e.g.,
 
@@ -100,7 +108,8 @@ discover(asa_handle1, obj1, timeout, minimum_TTL)
 ~~~~
 
 The client will receive in return a list of locators for ASAs that support the given objective.
-According to Section 2.9 of {{RFC8990}} these locators may be IP addresses, FQDNs, or URIs.
+According to Section 2.9.5 of {{RFC8990}} these locators may be IP addresses, FQDNs, or URIs.
+Each locator is returned with a transport protocol identifier and a port number, if needed.
 The client ASA may now use any of those locators to open a transport connection to
 another ASA supporting the given objective, with no other GRASP messages required.
 
@@ -148,7 +157,20 @@ amounted to about 60 lines of Python code.
 The security considerations of {{RFC8990}} apply. The normal deployment  scenario
 for GRASP is to run over a secure Autonomic Control Plane {{RFC8994}}, which defines
 a strongly enforced trust boundary and protects all traffic cryptographically.
-All agents must lie within this trust boundary.
+All agents must lie within this trust boundary, which forms a single GRASP domain.
+
+However, when an ASA registers itself as described in {{simple}}, this
+registration merely indicates that the responding ASA has successfully joined
+the ACP. It does not provide any authentication or authorization for the
+agent as such. Mutual authentication and authorization between agents are
+out of scope for the rendezvous mechanisms described here. They should be addressed
+as part of the protocol used between the agents following a successful
+rendezvous.
+
+GRASP supports a flooding mechanism, by which an ASA can advertise the current
+value of a GRASP objective to all other ASAs in the same domain. This mechanism
+should only be used for information that is potentially needed by all agents.
+It is not recommended as an alternative rendezvous mechanism.
 
 # IANA Considerations
 
@@ -166,4 +188,5 @@ and registering GRASP objectives, see Section 2.10.1 of {{RFC8990}}.
 # Acknowledgements
 {:numbered="false"}
 
-TBD
+Helpful comments were made by
+Artur Hecker.

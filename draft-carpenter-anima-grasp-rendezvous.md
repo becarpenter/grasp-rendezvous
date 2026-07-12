@@ -57,7 +57,7 @@ informative:
 
 --- abstract
 
-This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another, and then establish a generic communication channel between them. Such a channel could be used for any form of agent-to-agent (A2A) communication, not limited to GRASP exchanges.
+This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another, and then to establish a generic communication channel between them. Such a channel could be used for any form of agent-to-agent (A2A) communication, not limited to GRASP exchanges.
 
 --- middle
 

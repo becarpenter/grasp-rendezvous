@@ -15,7 +15,7 @@ Abstract
 
    This document describes how the GeneRic Autonomic Signaling Protocol
    (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for
-   one Autonomic Service Agent to find another, and then establish a
+   one Autonomic Service Agent to find another, and then to establish a
    generic communication channel between them.  Such a channel could be
    used for any form of agent-to-agent (A2A) communication, not limited
    to GRASP exchanges.
@@ -105,14 +105,18 @@ Table of Contents
    A basic feature of GRASP is its discovery mechanism, using the
    M_DISCOVER and M_RESPONSE messages, which allow an Autonomic Service
    Agent to discover another ASA that supports a particular GRASP
-   objective (as defined in RFC 8990).  Following this discovery
-   process, ASAs may conduct a GRASP synchronization session to share
-   data, or a GRASP negotiation session to agree on certain parameter
-   settings.
+   objective (as defined in RFC 8990).  This can provide the first stage
+   of 'discovery' as defined in [I-D.farrel-dawn-terminology].
+
+   Following this discovery process, ASAs may conduct a GRASP
+   synchronization session to share data, or a GRASP negotiation session
+   to agree on certain parameter settings.
 
    However, in some cases the two agents may require to communicate in
    some other way, outside the scope of GRASP synchronization or
-   negotiation, for example supporting agent-to-agent (A2A)
+   negotiation.  One example would be to complete the discovery
+   requirements outlined in [I-D.king-dawn-requirements].  More
+   generally, they may need to perform agent-to-agent (A2A)
    communication as discussed in documents such as
    [I-D.zeng-opsawg-applicability-mcp-a2a],
    [I-D.zhao-nmop-network-management-agent],
@@ -262,6 +266,21 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-eckert-anima-
               ai4an-01>.
 
+   [I-D.farrel-dawn-terminology]
+              Farrel, A., Yao, K., Schott, R., and N. Williams,
+              "Terminology for the Discovery of Agents, Workloads, and
+              Named Entities (DAWN)", Work in Progress, Internet-Draft,
+              draft-farrel-dawn-terminology-03, 5 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-farrel-dawn-
+              terminology-03>.
+
+   [I-D.king-dawn-requirements]
+              King, D. and A. Farrel, "Requirements for the Discovery of
+              Agents, Workloads, and Named Entities (DAWN)", Work in
+              Progress, Internet-Draft, draft-king-dawn-requirements-01,
+              28 April 2026, <https://datatracker.ietf.org/doc/html/
+              draft-king-dawn-requirements-01>.
+
    [I-D.rosenberg-agentproto-usecases]
               Rosenberg, J. and C. F. Jennings, "Framework, Use Cases
               and Requirements for AI Agent Protocols", Work in
@@ -310,7 +329,7 @@ A.1.  Draft-00
 
 Acknowledgements
 
-   Helpful comments were made by Artur Hecker.
+   Helpful comments were made by Artur Hecker, 韩梦瑶 (Han Mengyao), ...
 
 Author's Address
 

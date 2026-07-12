@@ -52,6 +52,8 @@ informative:
   I-D.zhao-nmop-network-management-agent:
   I-D.zeng-opsawg-applicability-mcp-a2a:
   I-D.eckert-anima-ai4an:
+  I-D.farrel-dawn-terminology:
+  I-D.king-dawn-requirements:
 
 --- abstract
 
@@ -76,13 +78,18 @@ are discussed in {{RFC9222}}.
 A basic feature of GRASP is its discovery mechanism, using the M_DISCOVER
 and M_RESPONSE messages, which allow an Autonomic Service Agent
 to discover another ASA that supports a particular GRASP objective
-(as defined in RFC 8990). Following this discovery process, ASAs may
+(as defined in RFC 8990). This can provide the first stage of 'discovery'
+as defined in {{I-D.farrel-dawn-terminology}}. 
+
+Following this discovery process, ASAs may
 conduct a GRASP synchronization session to share data, or a GRASP
 negotiation session to agree on certain parameter settings.
 
 However, in some cases the two agents may require to communicate in some
-other way, outside the scope of GRASP synchronization or negotiation,
-for example supporting agent-to-agent (A2A) communication as discussed in documents such as
+other way, outside the scope of GRASP synchronization or negotiation.
+One example would be to complete the discovery requirements outlined
+in {{I-D.king-dawn-requirements}}. More generally, they may need to
+perform agent-to-agent (A2A) communication as discussed in documents such as
 {{I-D.zeng-opsawg-applicability-mcp-a2a}},
 {{I-D.zhao-nmop-network-management-agent}},
 {{I-D.rosenberg-agentproto-usecases}} and
@@ -201,4 +208,6 @@ and registering GRASP objectives, see Section 2.10.1 of {{RFC8990}}.
 {:numbered="false"}
 
 Helpful comments were made by
-Artur Hecker.
+Artur Hecker,
+韩梦瑶 (Han Mengyao),
+...

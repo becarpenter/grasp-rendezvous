@@ -55,7 +55,7 @@ informative:
 
 --- abstract
 
-This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another and then establish a generic communication channel between them. Such a channel could be used for any form of bilateral communication between agents, not limited to GRASP exchanges.
+This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another, and then establish a generic communication channel between them. Such a channel could be used for any form of agent-to-agent (A2A) communication, not limited to GRASP exchanges.
 
 --- middle
 
@@ -65,7 +65,7 @@ The GeneRic Autonomic Signaling Protocol (GRASP) is specified in {{RFC8990}},
 and an API is described in {{RFC8991}}. Its purpose is to support discovery, data
 synchronization, and negotiation among Autonomic Service Agents (ASAs)
 in a self-managing autonomic network. A conceptual model of how
-AI agents might fit into an autonomic network may be found in 
+AI agents might fit into an autonomic network may be found in
 {{I-D.eckert-anima-ai4an}}. This document addresses how such agents may
 discover each other and establish communication.
 

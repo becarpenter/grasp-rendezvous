@@ -4,8 +4,8 @@
 
 Autonomic Networking Integrated Model and Approach       B. E. Carpenter
 Internet-Draft                                         Univ. of Auckland
-Intended status: Informational                              11 July 2026
-Expires: 12 January 2027
+Intended status: Informational                              12 July 2026
+Expires: 13 January 2027
 
 
               Using GRASP as an Agent Rendezvous Mechanism
@@ -15,10 +15,10 @@ Abstract
 
    This document describes how the GeneRic Autonomic Signaling Protocol
    (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for
-   one Autonomic Service Agent to find another and then establish a
+   one Autonomic Service Agent to find another, and then establish a
    generic communication channel between them.  Such a channel could be
-   used for any form of bilateral communication between agents, not
-   limited to GRASP exchanges.
+   used for any form of agent-to-agent (A2A) communication, not limited
+   to GRASP exchanges.
 
 About This Document
 
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 January 2027.
+   This Internet-Draft will expire on 13 January 2027.
 
 Copyright Notice
 
@@ -93,6 +93,11 @@ Table of Contents
    [RFC8990], and an API is described in [RFC8991].  Its purpose is to
    support discovery, data synchronization, and negotiation among
    Autonomic Service Agents (ASAs) in a self-managing autonomic network.
+   A conceptual model of how AI agents might fit into an autonomic
+   network may be found in [I-D.eckert-anima-ai4an].  This document
+   addresses how such agents may discover each other and establish
+   communication.
+
    For the general model of an autonomic network, and for terminology
    not otherwise defined here or in RFC 8990, see [RFC8993].  General
    considerations for ASAs are discussed in [RFC9222].
@@ -107,9 +112,14 @@ Table of Contents
 
    However, in some cases the two agents may require to communicate in
    some other way, outside the scope of GRASP synchronization or
-   negotiation, for example using the A2A protocol discussed in
-   [I-D.rosenberg-agentproto-usecases].  In this case, GRASP can be used
-   purely as a generic rendezvous mechanism between agents.
+   negotiation, for example supporting agent-to-agent (A2A)
+   communication as discussed in documents such as
+   [I-D.zeng-opsawg-applicability-mcp-a2a],
+   [I-D.zhao-nmop-network-management-agent],
+   [I-D.rosenberg-agentproto-usecases] and https://a2a-protocol.org/dev/
+   specification/ (https://a2a-protocol.org/dev/specification/).  In
+   this case, GRASP can be used purely as a generic rendezvous mechanism
+   between agents.
 
    Note that GRASP discovery does not discover a specified agent.
    Instead, it discovers an agent that supports a specified objective.
@@ -176,7 +186,9 @@ Table of Contents
    M_NEGOTIATE messages, both ASAs switch to a straightforward transport
    layer communication, using the channel created by the M_REQ_NEG/
    M_NEGOTIATE exchange.  Since GRASP is a CBOR-based protocol, messages
-   in this case are expected to be encoded in CBOR [RFC8949].
+   in this case are expected to be encoded in CBOR [RFC8949].  Since
+   CBOR itself can very readily encode JSON and therefore YANG, this is
+   a rather general solution.
 
    Note that although GRASP has a defined maximum message size, it will
    not limit these messages, as they are not GRASP messages.
@@ -243,6 +255,13 @@ Table of Contents
 
 6.2.  Informative References
 
+   [I-D.eckert-anima-ai4an]
+              Eckert, T. T. and A. Clemm, "AI for Autonomous
+              Networking", Work in Progress, Internet-Draft, draft-
+              eckert-anima-ai4an-01, 6 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-eckert-anima-
+              ai4an-01>.
+
    [I-D.rosenberg-agentproto-usecases]
               Rosenberg, J. and C. F. Jennings, "Framework, Use Cases
               and Requirements for AI Agent Protocols", Work in
@@ -250,6 +269,23 @@ Table of Contents
               usecases-00, 4 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-rosenberg-
               agentproto-usecases-00>.
+
+   [I-D.zeng-opsawg-applicability-mcp-a2a]
+              Zeng, G., Mao, J., Liu, B., Geng, N., Shang, X., Gao, Q.,
+              and Z. Li, "When NETCONF Is Not Enough: Applicability of
+              MCP and A2A for Advanced Network Management Scenarios",
+              Work in Progress, Internet-Draft, draft-zeng-opsawg-
+              applicability-mcp-a2a-00, 2 November 2025,
+              <https://datatracker.ietf.org/doc/html/draft-zeng-opsawg-
+              applicability-mcp-a2a-00>.
+
+   [I-D.zhao-nmop-network-management-agent]
+              XingZhao, Wang, M., Wu, B., Ceccarelli, D., Zheng, H., and
+              J. Zhou, "AI based Network Management Agent(NMA): Concepts
+              and Architecture", Work in Progress, Internet-Draft,
+              draft-zhao-nmop-network-management-agent-05, 5 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-zhao-nmop-
+              network-management-agent-05>.
 
    [RFC8991]  Carpenter, B., Liu, B., Ed., Wang, W., and X. Gong,
               "GeneRic Autonomic Signaling Protocol Application Program

@@ -7,7 +7,7 @@
 <title>Using GRASP as an Agent Rendezvous Mechanism</title>
 <meta content="Brian E. Carpenter" name="author">
 <meta content="
-       This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another and then establish a generic communication channel between them. Such a channel could be used for any form of bilateral communication between agents, not limited to GRASP exchanges. 
+       This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another, and then establish a generic communication channel between them. Such a channel could be used for any form of agent-to-agent (A2A) communication, not limited to GRASP exchanges. 
     " name="description">
 <meta content="xml2rfc 3.34.0" name="generator">
 <meta content="agent" name="keyword">
@@ -1049,7 +1049,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Carpenter</td>
-<td class="center">Expires 12 January 2027</td>
+<td class="center">Expires 13 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1062,12 +1062,12 @@ svg {
 <dd class="internet-draft">draft-carpenter-anima-grasp-rendezvous-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-11" class="published">11 July 2026</time>
+<time datetime="2026-07-12" class="published">12 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-12">12 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-13">13 January 2027</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1080,7 +1080,7 @@ svg {
 <h1 id="title">Using GRASP as an Agent Rendezvous Mechanism</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another and then establish a generic communication channel between them. Such a channel could be used for any form of bilateral communication between agents, not limited to GRASP exchanges.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another, and then establish a generic communication channel between them. Such a channel could be used for any form of agent-to-agent (A2A) communication, not limited to GRASP exchanges.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1117,7 +1117,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 12 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 13 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1206,31 +1206,38 @@ svg {
 <p id="section-1-1">The GeneRic Autonomic Signaling Protocol (GRASP) is specified in <span>[<a href="#RFC8990" class="cite xref">RFC8990</a>]</span>,
 and an API is described in <span>[<a href="#RFC8991" class="cite xref">RFC8991</a>]</span>. Its purpose is to support discovery, data
 synchronization, and negotiation among Autonomic Service Agents (ASAs)
-in a self-managing autonomic network.
-For the general model of an autonomic network, and for terminology not otherwise
+in a self-managing autonomic network. A conceptual model of how
+AI agents might fit into an autonomic network may be found in
+<span>[<a href="#I-D.eckert-anima-ai4an" class="cite xref">I-D.eckert-anima-ai4an</a>]</span>. This document addresses how such agents may
+discover each other and establish communication.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">For the general model of an autonomic network, and for terminology not otherwise
 defined here or in RFC 8990, see <span>[<a href="#RFC8993" class="cite xref">RFC8993</a>]</span>. General considerations for ASAs
-are discussed in <span>[<a href="#RFC9222" class="cite xref">RFC9222</a>]</span>.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">A basic feature of GRASP is its discovery mechanism, using the M_DISCOVER
+are discussed in <span>[<a href="#RFC9222" class="cite xref">RFC9222</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">A basic feature of GRASP is its discovery mechanism, using the M_DISCOVER
 and M_RESPONSE messages, which allow an Autonomic Service Agent
 to discover another ASA that supports a particular GRASP objective
 (as defined in RFC 8990). Following this discovery process, ASAs may
 conduct a GRASP synchronization session to share data, or a GRASP
-negotiation session to agree on certain parameter settings.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">However, in some cases the two agents may require to communicate in some
+negotiation session to agree on certain parameter settings.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">However, in some cases the two agents may require to communicate in some
 other way, outside the scope of GRASP synchronization or negotiation,
-for example using the A2A protocol discussed in <span>[<a href="#I-D.rosenberg-agentproto-usecases" class="cite xref">I-D.rosenberg-agentproto-usecases</a>]</span>.
+for example supporting agent-to-agent (A2A) communication as discussed in documents such as
+<span>[<a href="#I-D.zeng-opsawg-applicability-mcp-a2a" class="cite xref">I-D.zeng-opsawg-applicability-mcp-a2a</a>]</span>,
+<span>[<a href="#I-D.zhao-nmop-network-management-agent" class="cite xref">I-D.zhao-nmop-network-management-agent</a>]</span>,
+<span>[<a href="#I-D.rosenberg-agentproto-usecases" class="cite xref">I-D.rosenberg-agentproto-usecases</a>]</span> and
+<a href="https://a2a-protocol.org/dev/specification/">https://a2a-protocol.org/dev/specification/</a>.
 In this case, GRASP can be used purely as a generic rendezvous mechanism
-between agents.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">Note that GRASP discovery does not discover a specified agent. Instead, it
+between agents.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">Note that GRASP discovery does not discover a specified agent. Instead, it
 discovers an agent that supports a specified objective. For example, if
 an agent wants to find support for an objective named
 "example.org:translate_english_french", it will discover one or more agents
 that support an objective of that name. As a result, an agent can be specialised
 and only support one objective, or it could support several different
-objectives. This is an implementation and deployment choice.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">A feature of GRASP discovery that may be essential during a period of network
+objectives. This is an implementation and deployment choice.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">A feature of GRASP discovery that may be essential during a period of network
 instability is that it has no dependency on any protocols above the network
-layer, and in particular no dependency on DNS or mDNS.<a href="#section-1-5" class="pilcrow">¶</a></p>
+layer, and in particular no dependency on DNS or mDNS.<a href="#section-1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rendezvous-procedures">
@@ -1283,7 +1290,8 @@ described in Section 2.5.5 of <span>[<a href="#RFC8990" class="cite xref">RFC899
 of an M_NEGOTIATE message in reply, instead of continuing to exchange M_NEGOTIATE messages,
 both ASAs switch to a straightforward transport layer communication, using the channel
 created by the M_REQ_NEG/M_NEGOTIATE exchange. Since GRASP is a CBOR-based protocol,
-messages in this case are expected to be encoded in CBOR <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+messages in this case are expected to be encoded in CBOR <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>. Since CBOR itself
+can very readily encode JSON and therefore YANG, this is a rather general solution.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">Note that although GRASP has a defined maximum message size, it will not limit
 these messages, as they are not GRASP messages.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">This method has the advantage that it can be entirely handled by GRASP mechanisms plus a
@@ -1369,9 +1377,21 @@ and registering GRASP objectives, see Section 2.10.1 of <span>[<a href="#RFC8990
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.eckert-anima-ai4an">[I-D.eckert-anima-ai4an]</dt>
+        <dd>
+<span class="refAuthor">Eckert, T. T.</span> and <span class="refAuthor">A. Clemm</span>, <span class="refTitle">"AI for Autonomous Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-eckert-anima-ai4an-01</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-eckert-anima-ai4an-01">https://datatracker.ietf.org/doc/html/draft-eckert-anima-ai4an-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.rosenberg-agentproto-usecases">[I-D.rosenberg-agentproto-usecases]</dt>
         <dd>
 <span class="refAuthor">Rosenberg, J.</span> and <span class="refAuthor">C. F. Jennings</span>, <span class="refTitle">"Framework, Use Cases and Requirements for AI Agent Protocols"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-rosenberg-agentproto-usecases-00</span>, <time datetime="2026-07-04" class="refDate">4 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-rosenberg-agentproto-usecases-00">https://datatracker.ietf.org/doc/html/draft-rosenberg-agentproto-usecases-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.zeng-opsawg-applicability-mcp-a2a">[I-D.zeng-opsawg-applicability-mcp-a2a]</dt>
+        <dd>
+<span class="refAuthor">Zeng, G.</span>, <span class="refAuthor">Mao, J.</span>, <span class="refAuthor">Liu, B.</span>, <span class="refAuthor">Geng, N.</span>, <span class="refAuthor">Shang, X.</span>, <span class="refAuthor">Gao, Q.</span>, and <span class="refAuthor">Z. Li</span>, <span class="refTitle">"When NETCONF Is Not Enough: Applicability of MCP and A2A for Advanced Network Management Scenarios"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-zeng-opsawg-applicability-mcp-a2a-00</span>, <time datetime="2025-11-02" class="refDate">2 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-zeng-opsawg-applicability-mcp-a2a-00">https://datatracker.ietf.org/doc/html/draft-zeng-opsawg-applicability-mcp-a2a-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.zhao-nmop-network-management-agent">[I-D.zhao-nmop-network-management-agent]</dt>
+        <dd>
+<span class="refAuthor">XingZhao</span>, <span class="refAuthor">Wang, M.</span>, <span class="refAuthor">Wu, B.</span>, <span class="refAuthor">Ceccarelli, D.</span>, <span class="refAuthor">Zheng, H.</span>, and <span class="refAuthor">J. Zhou</span>, <span class="refTitle">"AI based Network Management Agent(NMA): Concepts and Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-zhao-nmop-network-management-agent-05</span>, <time datetime="2026-07-05" class="refDate">5 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-zhao-nmop-network-management-agent-05">https://datatracker.ietf.org/doc/html/draft-zhao-nmop-network-management-agent-05</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8991">[RFC8991]</dt>
         <dd>

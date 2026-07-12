@@ -79,7 +79,7 @@ A basic feature of GRASP is its discovery mechanism, using the M_DISCOVER
 and M_RESPONSE messages, which allow an Autonomic Service Agent
 to discover another ASA that supports a particular GRASP objective
 (as defined in RFC 8990). This can provide the first stage of 'discovery'
-as defined in {{I-D.farrel-dawn-terminology}}. 
+as defined in {{I-D.farrel-dawn-terminology}}.
 
 Following this discovery process, ASAs may
 conduct a GRASP synchronization session to share data, or a GRASP
@@ -118,7 +118,8 @@ of the GRASP objective concerned (see Section 2.10 of {{RFC8990}}).
 
 ## Simple rendezvous {#simple}
 
-The first method is simply to perform discovery and use the resulting locators appropriately. This is most easily described in terms of the GRASP API {{RFC8991}}. First the client ASA issues a discovery call, e.g.,
+The first method is simply to perform discovery and use the resulting locators appropriately.
+This is most easily described in terms of the GRASP API {{RFC8991}}. First the client ASA issues a discovery call, e.g.,
 
 ~~~~
 obj1 = objective("example.org:translate_english_french")

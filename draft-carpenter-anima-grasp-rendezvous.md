@@ -49,6 +49,9 @@ informative:
   RFC8993:
   RFC9222:
   I-D.rosenberg-agentproto-usecases:
+  I-D.zhao-nmop-network-management-agent:
+  I-D.zeng-opsawg-applicability-mcp-a2a:
+  I-D.eckert-anima-ai4an:
 
 --- abstract
 
@@ -61,7 +64,11 @@ This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) def
 The GeneRic Autonomic Signaling Protocol (GRASP) is specified in {{RFC8990}},
 and an API is described in {{RFC8991}}. Its purpose is to support discovery, data
 synchronization, and negotiation among Autonomic Service Agents (ASAs)
-in a self-managing autonomic network.
+in a self-managing autonomic network. A conceptual model of how
+AI agents might fit into an autonomic network may be found in 
+{{I-D.eckert-anima-ai4an}}. This document addresses how such agents may
+discover each other and establish communication.
+
 For the general model of an autonomic network, and for terminology not otherwise
 defined here or in RFC 8990, see {{RFC8993}}. General considerations for ASAs
 are discussed in {{RFC9222}}.
@@ -75,7 +82,11 @@ negotiation session to agree on certain parameter settings.
 
 However, in some cases the two agents may require to communicate in some
 other way, outside the scope of GRASP synchronization or negotiation,
-for example using the A2A protocol discussed in {{I-D.rosenberg-agentproto-usecases}}.
+for example supporting agent-to-agent (A2A) communication as discussed in documents such as
+{{I-D.zeng-opsawg-applicability-mcp-a2a}},
+{{I-D.zhao-nmop-network-management-agent}},
+{{I-D.rosenberg-agentproto-usecases}} and
+[https://a2a-protocol.org/dev/specification/](https://a2a-protocol.org/dev/specification/).
 In this case, GRASP can be used purely as a generic rendezvous mechanism
 between agents.
 
@@ -134,7 +145,8 @@ described in Section 2.5.5 of {{RFC8990}}, using the M_REQ_NEG message. Upon rec
 of an M_NEGOTIATE message in reply, instead of continuing to exchange M_NEGOTIATE messages,
 both ASAs switch to a straightforward transport layer communication, using the channel
 created by the M_REQ_NEG/M_NEGOTIATE exchange. Since GRASP is a CBOR-based protocol,
-messages in this case are expected to be encoded in CBOR {{RFC8949}}.
+messages in this case are expected to be encoded in CBOR {{RFC8949}}. Since CBOR itself
+can very readily encode JSON and therefore YANG, this is a rather general solution.
 
 Note that although GRASP has a defined maximum message size, it will not limit
 these messages, as they are not GRASP messages.

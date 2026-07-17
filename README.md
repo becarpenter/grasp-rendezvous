@@ -1,8 +1,8 @@
-<!-- regenerate: on (set to off if you edit this file) -->
+<!-- regenerate: off (set to off if you edit this file) -->
 
-# TODO - Your title
+# Using GRASP as an Agent Rendezvous Mechanism
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
+This is the working area for the individual Internet-Draft, "Using GRASP as an Agent Rendezvous Mechanism".
 
 * [Editor's Copy](https://becarpenter.github.io/grasp-rendezvous/#go.draft-carpenter-anima-grasp-rendezvous.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-carpenter-anima-grasp-rendezvous)

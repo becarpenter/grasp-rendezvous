@@ -157,7 +157,7 @@ includes only TCP and UDP, expressed in fragmentary CDDL {{RFC8610}} as:
   IPPROTO_UDP = 17
 ~~~~
 
-For rendezvous purposes, this needs to be extended to cover additional protocols. As noted in Section 2.9.5.1 of {{RFC8990}}, this requires a new registry, defined in {{iana}}.
+These are values from the IANA Protocol registry. For rendezvous purposes, this needs to be extended to cover additional protocols. As noted in Section 2.9.5.1 of {{RFC8990}}, this requires a new registry, defined in {{iana}}.
 
 ## Rendezvous via brief GRASP negotiation
 
@@ -214,6 +214,7 @@ It is not recommended as an alternative rendezvous mechanism.
 
 For considerations about naming and registering GRASP objectives, see Section 2.10.1 of {{RFC8990}}.
 
+Not all protocols of interest have entries in the IANA Protocol registry. Therefore,
 IANA is requested to create a new subregistry of the "GeneRic Autonomic Signaling Protocol (GRASP) Parameters" registry, known as the "GRASP Transport Identifiers" subregistry. The values in this
 subregistry are names paired with decimal integers greater than 255. Future values MUST be assigned
 using the Expert Review policy defined by {{RFC8126}}. The following initial values are assigned by this document:

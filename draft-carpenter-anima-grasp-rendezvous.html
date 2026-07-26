@@ -1297,7 +1297,7 @@ includes only TCP and UDP, expressed in fragmentary CDDL <span>[<a href="#RFC861
   IPPROTO_UDP = 17
 </pre><a href="#section-2.1-8" class="pilcrow">¶</a>
 </div>
-<p id="section-2.1-9">For rendezvous purposes, this needs to be extended to cover additional protocols. As noted in Section 2.9.5.1 of <span>[<a href="#RFC8990" class="cite xref">RFC8990</a>]</span>, this requires a new registry, defined in <a href="#iana" class="auto internal xref">Section 5</a>.<a href="#section-2.1-9" class="pilcrow">¶</a></p>
+<p id="section-2.1-9">These are values from the IANA Protocol registry. For rendezvous purposes, this needs to be extended to cover additional protocols. As noted in Section 2.9.5.1 of <span>[<a href="#RFC8990" class="cite xref">RFC8990</a>]</span>, this requires a new registry, defined in <a href="#iana" class="auto internal xref">Section 5</a>.<a href="#section-2.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rendezvous-via-brief-grasp-negotiation">
@@ -1367,7 +1367,8 @@ It is not recommended as an alternative rendezvous mechanism.<a href="#section-4
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-5-1">For considerations about naming and registering GRASP objectives, see Section 2.10.1 of <span>[<a href="#RFC8990" class="cite xref">RFC8990</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">IANA is requested to create a new subregistry of the "GeneRic Autonomic Signaling Protocol (GRASP) Parameters" registry, known as the "GRASP Transport Identifiers" subregistry. The values in this
+<p id="section-5-2">Not all protocols of interest have entries in the IANA Protocol registry. Therefore,
+IANA is requested to create a new subregistry of the "GeneRic Autonomic Signaling Protocol (GRASP) Parameters" registry, known as the "GRASP Transport Identifiers" subregistry. The values in this
 subregistry are names paired with decimal integers greater than 255. Future values MUST be assigned
 using the Expert Review policy defined by <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>. The following initial values are assigned by this document:<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5-3">

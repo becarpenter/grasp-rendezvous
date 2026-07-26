@@ -4,8 +4,9 @@
 
 Autonomic Networking Integrated Model and Approach       B. E. Carpenter
 Internet-Draft                                         Univ. of Auckland
-Intended status: Informational                              12 July 2026
-Expires: 13 January 2027
+Updates: 8990 (if approved)                                 26 July 2026
+Intended status: Informational                                          
+Expires: 27 January 2027
 
 
               Using GRASP as an Agent Rendezvous Mechanism
@@ -17,8 +18,9 @@ Abstract
    (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for
    one Autonomic Service Agent to find another, and then to establish a
    generic communication channel between them.  Such a channel could be
-   used for any form of agent-to-agent (A2A) communication, not limited
-   to GRASP exchanges.
+   used for any form of agent-to-agent communication, not limited to
+   GRASP exchanges.  This document updates RFC 8990 by adding a
+   transport identifier registry.
 
 About This Document
 
@@ -54,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 January 2027.
+   This Internet-Draft will expire on 27 January 2027.
 
 Copyright Notice
 
@@ -84,6 +86,7 @@ Table of Contents
      6.2.  Informative References
    Appendix A.  Change Log
      A.1.  Draft-00
+     A.2.  Draft-01
    Acknowledgements
    Author's Address
 
@@ -96,7 +99,8 @@ Table of Contents
    A conceptual model of how AI agents might fit into an autonomic
    network may be found in [I-D.eckert-anima-ai4an].  This document
    addresses how such agents may discover each other and establish
-   communication.
+   communication.  It extends [RFC8990] by adding a transport identifier
+   registry in Section 5.
 
    For the general model of an autonomic network, and for terminology
    not otherwise defined here or in RFC 8990, see [RFC8993].  General
@@ -179,6 +183,18 @@ Table of Contents
    as a client and the other as a server), and provide adequate
    security.
 
+   The definition of locator options for GRASP discovery responses
+   (Section 2.9.5 of [RFC8990]) includes only TCP and UDP, expressed in
+   fragmentary CDDL [RFC8610] as:
+
+     transport-proto = IPPROTO_TCP / IPPROTO_UDP
+     IPPROTO_TCP = 6
+     IPPROTO_UDP = 17
+
+   For rendezvous purposes, this needs to be extended to cover
+   additional protocols.  As noted in Section 2.9.5.1 of [RFC8990], this
+   requires a new registry, defined in Section 5.
+
 2.2.  Rendezvous via brief GRASP negotiation
 
    Another approach is possible, which creates a GRASP session
@@ -217,9 +233,13 @@ Table of Contents
    Control Plane [RFC8994], which defines a strongly enforced trust
    boundary and protects all traffic cryptographically.  All agents must
    lie within this trust boundary, which forms a single GRASP domain.
+   This model does not envisage any form of multi-domain trust model,
+   and inter-domain traffic is not supported.  Edge nodes that
+   communicate outside the domain are required to apply appropriate
+   precautions.
 
-   However, when an ASA registers itself as described in Section 2.1,
-   this registration merely indicates that the responding ASA has
+   When an ASA registers itself as described in Section 2.1, this
+   registration merely indicates that the responding ASA has
    successfully joined the ACP.  It does not provide any authentication
    or authorization for the agent as such.  Mutual authentication and
    authorization between agents are out of scope for the rendezvous
@@ -234,13 +254,38 @@ Table of Contents
 
 5.  IANA Considerations
 
-   No IANA actions are required by this document.  For considerations
-   about naming and registering GRASP objectives, see Section 2.10.1 of
-   [RFC8990].
+   For considerations about naming and registering GRASP objectives, see
+   Section 2.10.1 of [RFC8990].
+
+   IANA is requested to create a new subregistry of the "GeneRic
+   Autonomic Signaling Protocol (GRASP) Parameters" registry, known as
+   the "GRASP Transport Identifiers" subregistry.  The values in this
+   subregistry are names paired with decimal integers greater than 255.
+   Future values MUST be assigned using the Expert Review policy defined
+   by [RFC8126].  The following initial values are assigned by this
+   document:
+
+   Value   Transport ID   REFERENCE
+
+   256     PROTO_TLS      RFC8446
+   257     PROTO_DTLS     RFC9147
+   258     PROTO_QUIC     RFC9369
+   259     PROTO_HTTP     RFC9110
 
 6.  References
 
 6.1.  Normative References
+
+   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/info/rfc8126>.
+
+   [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
+              Definition Language (CDDL): A Notational Convention to
+              Express Concise Binary Object Representation (CBOR) and
+              JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
+              June 2019, <https://www.rfc-editor.org/info/rfc8610>.
 
    [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", STD 94, RFC 8949,
@@ -270,9 +315,9 @@ Table of Contents
               Farrel, A., Yao, K., Schott, R., and N. Williams,
               "Terminology for the Discovery of Agents, Workloads, and
               Named Entities (DAWN)", Work in Progress, Internet-Draft,
-              draft-farrel-dawn-terminology-03, 5 July 2026,
+              draft-farrel-dawn-terminology-04, 5 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-farrel-dawn-
-              terminology-03>.
+              terminology-04>.
 
    [I-D.king-dawn-requirements]
               King, D. and A. Farrel, "Requirements for the Discovery of
@@ -326,6 +371,10 @@ Appendix A.  Change Log
 A.1.  Draft-00
 
    *  Original version
+
+A.2.  Draft-01
+
+   *  Added transport_id registry
 
 Acknowledgements
 

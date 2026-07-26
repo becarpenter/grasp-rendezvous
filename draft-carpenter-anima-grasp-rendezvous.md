@@ -3,6 +3,7 @@ title: Using GRASP as an Agent Rendezvous Mechanism
 abbrev: GRASP Rendezvous
 docname: draft-carpenter-anima-grasp-rendezvous-latest
 submissiontype: IETF
+updates: 8990
 ipr: trust200902
 area: "Operations and Management"
 workgroup: "Autonomic Networking Integrated Model and Approach"
@@ -43,6 +44,8 @@ normative:
   RFC8990:
   RFC8994:
   RFC8949:
+  RFC8610:
+  RFC8126:
 
 informative:
   RFC8991:
@@ -57,7 +60,7 @@ informative:
 
 --- abstract
 
-This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another, and then to establish a generic communication channel between them. Such a channel could be used for any form of agent-to-agent (A2A) communication, not limited to GRASP exchanges.
+This document describes how the GeneRic Autonomic Signaling Protocol (GRASP) defined by RFC 8990 may be used as a rendezvous mechanism for one Autonomic Service Agent to find another, and then to establish a generic communication channel between them. Such a channel could be used for any form of agent-to-agent communication, not limited to GRASP exchanges. This document updates RFC 8990 by adding a transport identifier registry.
 
 --- middle
 
@@ -69,7 +72,8 @@ synchronization, and negotiation among Autonomic Service Agents (ASAs)
 in a self-managing autonomic network. A conceptual model of how
 AI agents might fit into an autonomic network may be found in
 {{I-D.eckert-anima-ai4an}}. This document addresses how such agents may
-discover each other and establish communication.
+discover each other and establish communication. It extends {{RFC8990}}
+by adding a transport identifier registry in {{iana}}.
 
 For the general model of an autonomic network, and for terminology not otherwise
 defined here or in RFC 8990, see {{RFC8993}}. General considerations for ASAs
@@ -144,6 +148,17 @@ This method has the advantage that any type of locator could be used and any tra
 protocol could be used. However, both ASAs will have to support the chosen locator type
 and transport protocol (one as a client and the other as a server), and provide adequate security.
 
+The definition of locator options for GRASP discovery responses (Section 2.9.5 of {{RFC8990}})
+includes only TCP and UDP, expressed in fragmentary CDDL {{RFC8610}} as:
+
+~~~~
+  transport-proto = IPPROTO_TCP / IPPROTO_UDP
+  IPPROTO_TCP = 6
+  IPPROTO_UDP = 17
+~~~~
+
+For rendezvous purposes, this needs to be extended to cover additional protocols. As noted in Section 2.9.5.1 of {{RFC8990}}, this requires a new registry, defined in {{iana}}.
+
 ## Rendezvous via brief GRASP negotiation
 
 Another approach is possible, which creates a GRASP session identifier
@@ -178,8 +193,11 @@ The security considerations of {{RFC8990}} apply. The normal deployment  scenari
 for GRASP is to run over a secure Autonomic Control Plane {{RFC8994}}, which defines
 a strongly enforced trust boundary and protects all traffic cryptographically.
 All agents must lie within this trust boundary, which forms a single GRASP domain.
+This model does not envisage any form of multi-domain trust model, and inter-domain
+traffic is not supported. Edge nodes that communicate outside the domain are required
+to apply appropriate precautions.
 
-However, when an ASA registers itself as described in {{simple}}, this
+When an ASA registers itself as described in {{simple}}, this
 registration merely indicates that the responding ASA has successfully joined
 the ACP. It does not provide any authentication or authorization for the
 agent as such. Mutual authentication and authorization between agents are
@@ -192,10 +210,22 @@ value of a GRASP objective to all other ASAs in the same domain. This mechanism
 should only be used for information that is potentially needed by all agents.
 It is not recommended as an alternative rendezvous mechanism.
 
-# IANA Considerations
+# IANA Considerations {#iana}
 
-No IANA actions are required by this document. For considerations about naming
-and registering GRASP objectives, see Section 2.10.1 of {{RFC8990}}.
+For considerations about naming and registering GRASP objectives, see Section 2.10.1 of {{RFC8990}}.
+
+IANA is requested to create a new subregistry of the "GeneRic Autonomic Signaling Protocol (GRASP) Parameters" registry, known as the "GRASP Transport Identifiers" subregistry. The values in this
+subregistry are names paired with decimal integers greater than 255. Future values MUST be assigned
+using the Expert Review policy defined by {{RFC8126}}. The following initial values are assigned by this document:
+
+~~~~
+Value   Transport ID   REFERENCE
+
+256     PROTO_TLS      RFC8446
+257     PROTO_DTLS     RFC9147
+258     PROTO_QUIC     RFC9369
+259     PROTO_HTTP     RFC9110
+~~~~
 
 --- back
 
@@ -204,6 +234,10 @@ and registering GRASP objectives, see Section 2.10.1 of {{RFC8990}}.
 ## Draft-00
 
 - Original version
+
+## Draft-01
+
+- Added transport_id registry
 
 # Acknowledgements
 {:numbered="false"}

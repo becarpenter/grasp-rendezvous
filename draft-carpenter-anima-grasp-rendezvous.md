@@ -222,7 +222,7 @@ using the Expert Review policy defined by {{RFC8126}}. The following initial val
 ~~~~
 Value   Transport ID   REFERENCE
 
-256     PROTO_TLS      RFC8446
+256     PROTO_TLS      RFC9846
 257     PROTO_DTLS     RFC9147
 258     PROTO_QUIC     RFC9369
 259     PROTO_HTTP     RFC9110
@@ -239,6 +239,10 @@ Value   Transport ID   REFERENCE
 ## Draft-01
 
 - Added transport_id registry
+
+## Draft-01
+
+- Minor corrections
 
 # Acknowledgements
 {:numbered="false"}

@@ -4,9 +4,9 @@
 
 Autonomic Networking Integrated Model and Approach       B. E. Carpenter
 Internet-Draft                                         Univ. of Auckland
-Updates: 8990 (if approved)                                 26 July 2026
+Updates: 8990 (if approved)                                 27 July 2026
 Intended status: Informational                                          
-Expires: 27 January 2027
+Expires: 28 January 2027
 
 
               Using GRASP as an Agent Rendezvous Mechanism
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 January 2027.
+   This Internet-Draft will expire on 28 January 2027.
 
 Copyright Notice
 
@@ -87,6 +87,7 @@ Table of Contents
    Appendix A.  Change Log
      A.1.  Draft-00
      A.2.  Draft-01
+     A.3.  Draft-01
    Acknowledgements
    Author's Address
 
@@ -269,7 +270,7 @@ Table of Contents
 
    Value   Transport ID   REFERENCE
 
-   256     PROTO_TLS      RFC8446
+   256     PROTO_TLS      RFC9846
    257     PROTO_DTLS     RFC9147
    258     PROTO_QUIC     RFC9369
    259     PROTO_HTTP     RFC9110
@@ -377,6 +378,10 @@ A.1.  Draft-00
 A.2.  Draft-01
 
    *  Added transport_id registry
+
+A.3.  Draft-01
+
+   *  Minor corrections
 
 Acknowledgements
 

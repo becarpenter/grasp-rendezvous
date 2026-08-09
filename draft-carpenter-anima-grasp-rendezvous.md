@@ -240,7 +240,7 @@ Value   Transport ID   REFERENCE
 
 - Added transport_id registry
 
-## Draft-01
+## Draft-02
 
 - Minor corrections
 

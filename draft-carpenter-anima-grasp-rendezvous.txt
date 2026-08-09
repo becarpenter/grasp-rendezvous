@@ -4,9 +4,9 @@
 
 Autonomic Networking Integrated Model and Approach       B. E. Carpenter
 Internet-Draft                                         Univ. of Auckland
-Updates: 8990 (if approved)                                 27 July 2026
+Updates: 8990 (if approved)                                9 August 2026
 Intended status: Informational                                          
-Expires: 28 January 2027
+Expires: 10 February 2027
 
 
               Using GRASP as an Agent Rendezvous Mechanism
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 January 2027.
+   This Internet-Draft will expire on 10 February 2027.
 
 Copyright Notice
 
@@ -87,7 +87,7 @@ Table of Contents
    Appendix A.  Change Log
      A.1.  Draft-00
      A.2.  Draft-01
-     A.3.  Draft-01
+     A.3.  Draft-02
    Acknowledgements
    Author's Address
 
@@ -318,7 +318,7 @@ Table of Contents
               Farrel, A., Yao, K., Schott, R., and N. Williams,
               "Terminology for the Discovery of Agents, Workloads, and
               Named Entities (DAWN)", Work in Progress, Internet-Draft,
-              draft-farrel-dawn-terminology-04, 5 July 2026,
+              draft-farrel-dawn-terminology-04, 26 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-farrel-dawn-
               terminology-04>.
 
@@ -379,7 +379,7 @@ A.2.  Draft-01
 
    *  Added transport_id registry
 
-A.3.  Draft-01
+A.3.  Draft-02
 
    *  Minor corrections
 
